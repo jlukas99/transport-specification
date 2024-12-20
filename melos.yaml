@@ -1,0 +1,31 @@
+name: transport_spec_workspace
+repository: https://github.com/your-username/transport_spec_app
+
+packages:
+  - "**"
+
+scripts:
+  analyze:
+    run: |
+      melos exec -c 1 -- "dart analyze . --fatal-infos"
+    description: Run analyzer for all packages
+
+  format:
+    run: |
+      melos exec -c 1 -- "dart format ."
+    description: Format all packages
+
+  build:gen:
+    run: |
+      dart run build_runner build --delete-conflicting-outputs
+    description: Build all generated files
+
+  build:watch:
+    run: |
+      melos exec -c 1 --depends-on="build_runner" -- "dart run build_runner watch --delete-conflicting-outputs"
+    description: Watch and build generated files
+
+  test:
+    run: |
+      melos exec -c 1 --dir-exists="test" -- "flutter test"
+    description: Run tests for all packages
